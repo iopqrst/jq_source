@@ -1,0 +1,71 @@
+﻿<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<script type="text/javascript" src="jquery-1.9.1.js"></script>
+	
+	<script type="text/javascript">
+	$(function(){
+	
+		/*
+		function Person(name,age) {
+			this.name = name;
+			this.age = age;
+		};
+		
+		var arr = $.merge( [0,1,2], new Person('monkey',23) );
+		console.info(arr);
+		
+		
+		
+		$("p").each(function(i,e){
+			console.info(i + e);
+		});*/
+		
+		//var msg = '[{"name":"hou<br/>zhiqing","age":23},{"name":"hou<br/>zhiqing","age":23},{"name":"hou<br/>zhiqing","age":23}]'; 
+		//var obj = $.parseJSON(msg); 
+		//alert(obj.name + obj.age);
+		
+		$.fn.extend({
+			"say1":function(){
+				alert(1);
+			},
+			"say2":function(){
+				alert(2);
+			}
+		});
+		
+		$.extend({
+			"say3":function(){alert(3)},
+			"say4":function(){alert(4)}
+		});
+		
+		
+		$("#p").say1();
+		$.say3();
+
+        $.grep([1,2,3,4],function(n, i){
+            return n > 2;
+
+        },true);
+	});
+	</script>
+</head>
+<body>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<p>1</p>
+	<input name="uname">
+	<input name="pwd">
+	
+	<div>div1</div>
+	<div>div2</div>
+	<div>div3</div>
+	<div>div4</div>
+	<div>div5</div>
+</body>
+</html>

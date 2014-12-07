@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        *{margin:0px; padding:0px;}
+
+    </style>style
+    <script src="jquery-1.9.1.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            //簡單的說，defferred对象就是jQuery的回调函数解决方案
+            var deferred = $.Deferred();
+
+        });
+
+        /**
+         * 指定同一操作的多个回调函数
+         */
+        $.ajax("jquery.html")
+                .done(function(){
+                    alert('哈哈，成功了');
+                })
+                .fail(function(){
+                    alert('失败了');
+                }).done(function(){
+                    alert('测试添加多个回调函数1');
+                }).done(function(){
+                    alert('测试添加多个回调函数2');
+                });
+
+        /**
+         * 为多个函数指定回调函数
+         * 两个操作都成功以后调用
+         */
+//        $.when($.ajax("jquery.html"), $.ajax("jquery-deferred.html"))
+//                .done(function(){
+//                    alert('为多个函数指定回调函数 success');
+//                })
+//                .fail(function(){
+//                    alert('为多个函数指定回调函数 fail');
+//                });
+
+        /**
+         *
+
+        var wait = function(){
+
+            var dtd = $.Deferred();
+
+            var tasks = function(){
+                alert('执行完毕');
+
+                dtd.resolve(); //改变Deferred对象的执行状态
+            };
+
+            setTimeout(tasks, 5000);
+
+            return dtd.promise(); //返回promise对象;
+        };
+
+
+        $.when(wait()).done(function(){
+            alert('ok');
+        }).fail(function(){
+            alert('error');
+        });
+         */
+
+//        $.Deferred() //生成一个deferred对象
+//        deferred.done() //指定操作成功后的回调函数
+//        deferred.fail() //指定操作是该是的回调函数
+//        deferred.promise() //没有参数时，返回一个新的deferred对象。该对象的运行状态无法被改变；接收参数时，作用为参数对象上部署deferred接口。
+//        deferred.resolve(); //手动改变deferred对象的运行状态为已完成，从而立即出发done() 方法
+//        deferred.reject(); //与resolve()相反，调用后返回deferred对象运行状态改为“已失败”，从而触发fail()方法.
+
+
+        console.info($.isWindow(undefined));
+    </script>
+</head>
+<body>
+    <ul id="nav">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+</body>
+</html>
