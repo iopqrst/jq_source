@@ -1,10 +1,41 @@
 <!DOCTYPE html>
 <html>
+
 	<head>
 		<meta charset="utf-8" />
 		<title></title>
-	</head>
-	<body>
+		<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 		
+	</head>
+
+	<body>
+		<div id="div1"></div>
+		<ul></ul>
+		<script type="text/javascript">
+//			$("#div1", $("body")).css({
+//				'height': 100,
+//				'width': 100,
+//				'background-color':'#ff0'
+//			})
+
+//			var sli = "<li>111</li><li>2222</li><script>alert('1111')<\/script>";
+//			
+//			$(sli).appendTo($('ul'));
+
+			var o1 = {
+				"name":"monkey",
+				"age":23,
+				length:2
+			};
+			
+			var o2 = {
+				"address":"Beijing",
+				"mobile":"18701044000",
+				length:2
+			};
+			// 有问题
+			console.info($.merge(o1, o2));
+		</script>
 	</body>
+
 </html>
