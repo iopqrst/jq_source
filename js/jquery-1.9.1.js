@@ -136,7 +136,7 @@
 		init: function(selector, context, rootjQuery) {
 			var match, elem;
 
-			// hzq1、HANDLE: $(""), $(null), $(undefined), $(false)
+			// hzq:1 HANDLE: $(""), $(null), $(undefined), $(false)
 			if (!selector) {
 				return this;
 			}
@@ -234,13 +234,13 @@
 					return this.constructor(context).find(selector);
 				}
 
-				// HANDLE: $(DOMElement)
+				// hzq:3 HANDLE: $(DOMElement)
 			} else if (selector.nodeType) {
 				this.context = this[0] = selector;
 				this.length = 1;
 				return this;
 
-				// HANDLE: $(function)
+				// hzq:4 HANDLE: $(function)
 				// Shortcut for document ready
 			} else if (jQuery.isFunction(selector)) {
 				return rootjQuery.ready(selector);
@@ -354,15 +354,15 @@
 	/**
 	 * jquery 继承用法：
 	 * <pre>
-	 * 1. 
+	1. 
 		$.extend({
 			a:function(){alert(1)},
 			b:function(){alert(2)}
 		});
-	 * 
-	 * 调用时$.a() 或 $.b() 
-	 * 
-	 * 2. 
+		
+		调用时$.a() 或 $.b() 
+		
+	2. 
 		$.fn.extend({
 			c:function(){
 			    alert(3);
@@ -372,21 +372,20 @@
 		    }
 		});
 		  
-	   调用方式：
-	   
-	   	$.fn.c();
+		调用方式：
+		
+		$.fn.c();
 		$('p').c();
 		$('p').d('d');
 
-		3.
+	3.
 		var p1 = {name:"monkey",age:23};
 		var p2 = {address:"beijing",age:24};
 
 		var target = $.extend({},p1,p2);
 		console.info(target); //age->24
 
-
-		深复制和浅复制的区别？
+		Q:深复制和浅复制的区别？
 		ps: 我自己的理解：深复制相当于复制了原属性一份，改变原属性当前属性不会发生变化，浅复制相当于一个指针指向了相应的属性，
 		当原有属性发生变化时，现有属性同样发生变化。
 
@@ -442,11 +441,11 @@
 		}
 
 		// extend jQuery itself if only one argument is passed
-		/* 
-	 * i的可取值范围[1-2]，也就是参数为1-2个时这个条件可能成立（length如果是1时说明为插件，也不能复制属性吧，
-		如果length=2则说明第一个参数为boolean,同样也不会）
-		判断传入参数是否已“插件”的方式传入
-	 */
+		/*
+		 * i的可取值范围[1-2]，也就是参数为1-2个时这个条件可能成立（length如果是1时说明为插件，
+		 * 也不能复制属性吧， 如果length=2则说明第一个参数为boolean,同样也不会）
+		 * 判断传入参数是否已“插件”的方式传入
+		 */
 		if (length === i) {
 			target = this;
 			--i;
@@ -794,21 +793,24 @@
 			//rdashAlpha = /-([\da-z])/gi,
 			//rmsPrefix = /^-ms-/,
 
-			/**
+		/* 
+		<pre>
+		
 		function fcamelCase(f,s,t,fo){
-		    console.info(f + "," + s + "," + t + "," + fo);
-		    return s.toUpperCase();
+			console.info(f + "," + s + "," + t + "," + fo);
+			return s.toUpperCase();
 		}
 
 		var msg = "-webkit-transform".replace( /-([\da-z][a-z])/gi, fcamelCase );
 		
-		replace 函数
+		replace 函数:
 		
-		    1. 第一个参数为每次匹配的全文本（$&），就是整个匹配的字符串
-		    2. 中间参数为<b>子表达式</b>匹配字符串，个数不限.( $n (n:1-99))，有分组的时候
-		    3. 倒数第二个参数为匹配文本字符串的匹配下标位置。
-		    4. 最后一个参数表示字符串本身。
-
+			1. 第一个参数为每次匹配的全文本（$&），就是整个匹配的字符串
+			2. 中间参数为<b>子表达式</b>匹配字符串，个数不限.( $n (n:1-99))，有分组的时候
+			3. 倒数第二个参数为匹配文本字符串的匹配下标位置。
+			4. 最后一个参数表示字符串本身。
+			
+		</pre>
 		*/
 			return string.replace(rmsPrefix, "ms-").replace(rdashAlpha, fcamelCase);
 		},
