@@ -285,13 +285,14 @@
 		// (returning the new matched element set)
 		// 把元素放入堆栈中，先进后出
 		// 所有采用pushStack实现的方法，在调用end()方法后会回到上一个元素
+		// 参考03-pushStack.html (下面的slice同样调用该方法)
 		pushStack: function(elems) {
 
 			// Build a new jQuery matched element set
 			var ret = jQuery.merge(this.constructor(), elems);
 
 			// Add the old object onto the stack (as a reference)
-			ret.prevObject = this;
+			ret.prevObject = this; //看一下end()
 			ret.context = this.context;
 
 			// Return the newly-formed element set
