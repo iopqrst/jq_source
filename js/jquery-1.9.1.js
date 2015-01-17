@@ -378,6 +378,11 @@
 		$.fn.c();
 		$('p').c();
 		$('p').d('d');
+		
+		总结1、2：
+		
+		$.extend(); -> this -> $ -> this.a -> $.a();
+		$.fn.extend(); -> this -> $.fn -> this.aaa -> $().a();
 
 	3.
 		var p1 = {name:"monkey",age:23};
