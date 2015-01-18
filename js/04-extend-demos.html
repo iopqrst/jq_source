@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				
+				
+				var obj1 = {name : "monkey", age:23};
+				var obj2 = {name : "superman", mobile : "18700000000"};
+				
+				debugger;
+
+				// demo1
+				//console.info( $.extend(obj1, obj2) );
+				
+				// demo2
+//				$.extend({
+//					"show" : function() {},
+//					"sayHi": function() {}
+//				});
+				
+				// demo3
+				var obj3 = {};
+				var obj4 = {name : obj3};
+				
+				// 注释掉源码中防止循环引用部分代码
+				console.info( $.extend(obj3, obj4) );
+				
+				// 深拷贝
+				var obj5 = {name : "superman", student: {
+					name: "张三那",
+					age: 38
+				}};
+				console.info( $.extend(true, obj1, obj5) );
+				
+			});
+		</script>
+	</head>
+	<body>
+		
+	</body>
+</html>

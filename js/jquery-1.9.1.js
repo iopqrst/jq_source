@@ -423,6 +423,7 @@
 		</pre>
 	 */
 	jQuery.extend = jQuery.fn.extend = function() {
+		//1、 定义变量 
 		var src, copyIsArray, copy, name, options, clone,
 			target = arguments[0] || {},
 			i = 1,
@@ -430,6 +431,7 @@
 			deep = false;
 
 		// Handle a deep copy situation target 
+		//2、判断是否是深拷贝
 		// 判断第一个参数是否为boolean类型，若是表示属性复制，此时参数从第二个开始为"对象"，
 		// 复制也将从第二个参数开始. 换句话说，第二个以后的对象都将复制到第二个参数对象上。
 		// 深复制或者前复制将由boolean的值确定
@@ -441,18 +443,20 @@
 		}
 
 		// Handle case when target is a string or something (possible in deep copy)
+		//3、 判断参数是否正确 （前面对target的处理都是基于对象拷贝，这里是对“插件”的处理
 		// 如果参数不是对象或者函数，而是字一个字符串或者其他，直接舍掉，改为重新"new"一个对象{}
 		if (typeof target !== "object" && !jQuery.isFunction(target)) {
 			target = {};
 		}
 
 		// extend jQuery itself if only one argument is passed
+		//4、判断是否是插件
 		/*
 		 * i的可取值范围[1-2]，也就是参数为1-2个时这个条件可能成立（length如果是1时说明为插件，
 		 * 也不能复制属性吧， 如果length=2则说明第一个参数为boolean,同样也不会）
-		 * 判断传入参数是否已“插件”的方式传入
+		 * 判断传入参数是否以“插件”的方式传入
 		 */
-		if (length === i) {
+		if (length === i) { //插件的时候i只能为1，而且length也只能为1
 			target = this;
 			--i;
 		}
@@ -472,6 +476,17 @@
 
 					// Recurse if we're merging plain objects or arrays
 					if (deep && copy && (jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)))) {
+
+						// 下面的判断主要是目的：
+						/**
+						 * <pre>
+						 * var o1 = { name : { job : 'it' }
+						 * var o2 = { name : { age : 33 }
+						 *
+						 * var $.extend( o1, o2) --> {name : {job:'it', age:33}}
+						 * 如果直接使用[] 或 {} 将导致部分数据丢失
+						 * </pre>
+						 */
 						if (copyIsArray) {
 							copyIsArray = false;
 							clone = src && jQuery.isArray(src) ? src : [];
@@ -799,25 +814,25 @@
 			//rdashAlpha = /-([\da-z])/gi,
 			//rmsPrefix = /^-ms-/,
 
-		/* 
-		<pre>
+			/* 
+			<pre>
 		
-		function fcamelCase(f,s,t,fo){
-			console.info(f + "," + s + "," + t + "," + fo);
-			return s.toUpperCase();
-		}
+			function fcamelCase(f,s,t,fo){
+				console.info(f + "," + s + "," + t + "," + fo);
+				return s.toUpperCase();
+			}
 
-		var msg = "-webkit-transform".replace( /-([\da-z][a-z])/gi, fcamelCase );
+			var msg = "-webkit-transform".replace( /-([\da-z][a-z])/gi, fcamelCase );
 		
-		replace 函数:
+			replace 函数:
 		
-			1. 第一个参数为每次匹配的全文本（$&），就是整个匹配的字符串
-			2. 中间参数为<b>子表达式</b>匹配字符串，个数不限.( $n (n:1-99))，有分组的时候
-			3. 倒数第二个参数为匹配文本字符串的匹配下标位置。
-			4. 最后一个参数表示字符串本身。
-			
-		</pre>
-		*/
+				1. 第一个参数为每次匹配的全文本（$&），就是整个匹配的字符串
+				2. 中间参数为<b>子表达式</b>匹配字符串，个数不限.( $n (n:1-99))，有分组的时候
+				3. 倒数第二个参数为匹配文本字符串的匹配下标位置。
+				4. 最后一个参数表示字符串本身。
+				
+			</pre>
+			*/
 			return string.replace(rmsPrefix, "ms-").replace(rdashAlpha, fcamelCase);
 		},
 
