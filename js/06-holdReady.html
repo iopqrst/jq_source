@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>holdReady</title>
+		<script src="jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+			
+			$.holdReady(true); 
+			
+			$(function(){
+				alert(1);
+			});
+			
+			setTimeout(function(){
+				console.info(Date.now());
+				
+				$.holdReady(false);
+			}, 5000);
+		</script>
+	</head>
+	<body>
+	</body>
+</html>

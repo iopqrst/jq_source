@@ -122,7 +122,7 @@
 				document.removeEventListener("DOMContentLoaded", completed, false);
 				window.removeEventListener("load", completed, false);
 
-			} else {
+			} else {// fixed ie 
 				document.detachEvent("onreadystatechange", completed);
 				window.detachEvent("onload", completed);
 			}
@@ -543,7 +543,7 @@
 
 		// Handle when the DOM is ready
 		ready: function(wait) {
-
+			debugger;
 			// Abort if there are pending holds or we're already ready
 			if (wait === true ? --jQuery.readyWait : jQuery.isReady) {
 				return;
@@ -1151,9 +1151,9 @@
 	});
 
 	jQuery.ready.promise = function(obj) {
-		if (!readyList) {
+		if (!readyList) { //保证一个页面只进行一次操作
 
-			readyList = jQuery.Deferred();
+			readyList = jQuery.Deferred(); //定义一个延迟对象
 
 			// Catch cases where $(document).ready() is called after the browser event has already occurred.
 			// we once tried to use readyState "interactive" here, but it caused issues like the one
@@ -1169,6 +1169,11 @@
 
 				// A fallback to window.onload, that will always work
 				window.addEventListener("load", completed, false);
+				
+				// DOMContentLoaded 和 load 同时写是为了防止浏览器缓存事件导致
+				// 事件限制性或不执行，而两个都调用了回调函数completed,在回调函数中
+				// 我们可以看到方法同时移除了两个事件，也就意味着无论哪个方法执行，都只会
+				// 执行一次（不知道解释对不对）
 
 				// If IE event model is used
 			} else {
@@ -2018,6 +2023,7 @@
 
 		// Unique for each copy of jQuery on the page
 		// Non-digits removed to match rinlinejQuery
+		// replace 将所有非数字的字符替换成空字符
 		expando: "jQuery" + (core_version + Math.random()).replace(/\D/g, ""),
 
 		// The following elements throw uncatchable exceptions if you
