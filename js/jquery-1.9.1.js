@@ -543,7 +543,6 @@
 
 		// Handle when the DOM is ready
 		ready: function(wait) {
-			debugger;
 			// Abort if there are pending holds or we're already ready
 			if (wait === true ? --jQuery.readyWait : jQuery.isReady) {
 				return;
@@ -601,7 +600,7 @@
 			// 调用Object.prototype.toString方法，生成 "[object Xxx]"格式的字符串
 			// class2type[ "[object " + name + "]" ] = name.toLowerCase();
 			if (obj == null) {
-				return String(obj);
+				return String(obj);  // --> "null"
 			}
 			return typeof obj === "object" || typeof obj === "function" ?
 				class2type[core_toString.call(obj)] || "object" :
@@ -841,9 +840,12 @@
 			return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 		},
 
-		// args is for internal usage only 参数仅供内部使用
 		/**
 		 * 遍历对象或数组
+		 * 
+		 * @param obj
+		 * @param callback
+		 * @param args args is for internal usage only 参数仅供内部使用
 		 */
 		each: function(obj, callback, args) {
 			var value,
@@ -1227,7 +1229,6 @@
 	/**
 	 * 判断传入的对象是否为“数组”(伪数组)
 	 */
-
 	function isArraylike(obj) {
 		var length = obj.length,
 			type = jQuery.type(obj);
