@@ -584,24 +584,55 @@
 			return jQuery.type(obj) === "array";
 		},
 
+		/**
+		 * 是不是window对象
+		 * 除了 null 、 undefined 与 null 相比会返回true外，其他都返回false
+		 * null == null -> true、undefined == null -> true , 其他
+		 * 与null 都返回 false
+		 */
 		isWindow: function(obj) {
+			// 后面的版本改成了
+			// return obj != null && obj === obj.window;
 			return obj != null && obj == obj.window;
 		},
 
+		/**
+		 * 是否是数字
+		 * 
+		 * isFinite() 函数用于检查其参数是否是无穷大。
+		 * 如果 number 是有限数字（或可转换为有限数字），那么返回 true。
+		 * 否则，如果 number 是 NaN（非数字），或者是正、负无穷大的数，则返回 false。
+		 * 
+		 * 思考：
+		 * 1、既然isFinite 可以判断出非数字，那为什么不直接写isFinite来判断
+		 * 而是还要加上前面的？
+		 * 
+		 * 2、可以使用typeof obj 来判断是否是数字吗？
+		 * 不能，因为typeof NaN 也会返回number
+		 */
 		isNumeric: function(obj) {
 			return !isNaN(parseFloat(obj)) && isFinite(obj);
 		},
 		/**
 		 * 判断传入值得类型
+		 * 
+		 * typeof (new Date()) --> object
+		 * typeof [] --> object
+		 * 没法区分呀！！所以...
 		 */
 		type: function(obj) {
 			// 通过核心API创建一个对象，不需要new关键字
 			// 普通函数不行
 			// 调用Object.prototype.toString方法，生成 "[object Xxx]"格式的字符串
 			// class2type[ "[object " + name + "]" ] = name.toLowerCase();
-			if (obj == null) {
+			if (obj == null) { // null或undefined
 				return String(obj);  // --> "null"
 			}
+			
+			//Object.prototype.toString.call(obj)
+//			return (typeof obj === "object" || typeof obj === "function") ?
+//				(class2type[core_toString.call(obj)] || "object") :
+//				typeof obj;
 			return typeof obj === "object" || typeof obj === "function" ?
 				class2type[core_toString.call(obj)] || "object" :
 				typeof obj;
@@ -633,7 +664,8 @@
 			if (!obj || jQuery.type(obj) !== "object" || obj.nodeType || jQuery.isWindow(obj)) {
 				return false;
 			}
-
+			
+			// TODO 有点迷糊
 			try {
 				// Not own constructor property must be Object
 				// 测试constructor属性
@@ -658,6 +690,14 @@
 
 		/**
 		 * 是否为空对象
+		 * 
+		 * isEmptyObject([])
+		 * isEmptyObject({})
+		 * function Aaa() {}
+		 * var obj = new Aaa();
+		 * isEmptyObject(obj) 
+		 * 
+		 * 等都是空对象
 		 */
 		isEmptyObject: function(obj) {
 			var name;
@@ -1221,6 +1261,11 @@
 	// Populate the class2type map
 	/**
 	 * 将类型放入数组中
+	 * 
+	 * [object Boolean] -> boolean
+	 * [object Number] -> number
+	 * [object String] -> string
+	 * ...
 	 */
 	jQuery.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(i, name) {
 		class2type["[object " + name + "]"] = name.toLowerCase();
