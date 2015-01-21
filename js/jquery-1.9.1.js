@@ -877,7 +877,7 @@
 				return s.toUpperCase();
 			}
 
-			var msg = "-webkit-transform".replace( /-([\da-z][a-z])/gi, fcamelCase );
+			var msg = "-webkit-transform".replace( /-([\da-z])/gi, fcamelCase );
 		
 			replace 函数:
 		
