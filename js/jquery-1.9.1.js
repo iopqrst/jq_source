@@ -611,6 +611,8 @@
 		 * 不能，因为typeof NaN 也会返回number
 		 */
 		isNumeric: function(obj) {
+			// obj == 123 --> true
+			// ojb == NaN --> false
 			return !isNaN(parseFloat(obj)) && isFinite(obj);
 		},
 		/**
@@ -645,6 +647,17 @@
 		// console.info( $.isPlainObject( document ) ); // false
 		// console.info( $.isPlainObject( new Date() ) ); // false
 		// console.info( $.isPlainObject( ) ); // false
+		
+		/**
+		 * var o1 = new Object('aa');
+		 * $.isPlainObject(o1) --> false
+		 * console.info(o1.constructor == String) --> true
+		 * 
+		 * 同理：
+		 * var o1 = new Object(123);
+		 * $.isPlainObject(o1) --> false
+		 * console.info(o1.constructor == Number) --> true
+		 */
 
 		// isPlainObject分析与重构 http://www.jb51.net/article/25047.htm
 		// 对jQuery.isPlainObject()的理解 http://www.cnblogs.com/phpmix/articles/1733599.html
@@ -669,7 +682,8 @@
 			try {
 				// Not own constructor property must be Object
 				// 测试constructor属性
-				// 具有构造函数constructor，却不是自身的属性（即通过prototype继承的），
+				// 具有构造函数constructor，却不是自身的属性（即通过prototype继承的）
+				// isPrototypeOf是挂在Object.prototype上的。通过字面量或自定义类（构造器）创建的对象都会继承该属性方法
 				if (obj.constructor && !core_hasOwn.call(obj, "constructor") && !core_hasOwn.call(obj.constructor.prototype, "isPrototypeOf")) {
 					return false;
 				}
@@ -746,7 +760,7 @@
 		parseJSON: function(data) {
 
 			/*
-			 * 判断呢，为什么不限做判断二直接上来就转换，未免也太不严谨了，之前的版本还有判断，
+			 * 判断呢，为什么不限做判断而直接上来就转换，未免也太不严谨了，之前的版本还有判断，
 			 * 更新版本后没了，什么情况
 			 *
 			 *  if (!data || typeof data !== "string") {
@@ -6984,6 +6998,7 @@
 			}
 		}
 	});
+	
 	var iframe, getStyles, curCSS,
 		ralpha = /alpha\([^)]*\)/i,
 		ropacity = /opacity\s*=\s*([^)]*)/,
