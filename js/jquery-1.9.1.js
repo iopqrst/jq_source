@@ -739,6 +739,8 @@
 				keepScripts = context;
 				context = false;
 			}
+			
+			// 上下文其实只能是document(.createElement), 可能是当前页面的document，也可能是iframe的document
 			context = context || document;
 
 			//rsingleTag = /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
@@ -6932,6 +6934,7 @@
 				if (scripts) {
 					j = 0;
 					while ((elem = tmp[j++])) {
+						// rscriptType = /^$|\/(?:java|ecma)script/i,
 						if (rscriptType.test(elem.type || "")) {
 							scripts.push(elem);
 						}

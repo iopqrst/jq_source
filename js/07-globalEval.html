@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>globalEval</title>
+		<script src="jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			
+			/**
+			 * eval 关键字只在局部范围内起作用，在函数外就不起作用了，比如test1与test3对比
+			 * 
+			 * window.eval 是window下的方法，可以全局解析到，这就是 test2与test4看到的结果
+			 * 
+			 */
+			
+			function test1(){
+				eval('var a = 1');
+				alert('a=' + a);
+			};
+			test1();
+			
+			function test2(){
+				window.eval('var b = 2');
+			};
+			test2();
+			
+			alert('b=' + b);
+
+			function test3(){
+				eval('var c = 3');
+			};
+			test3();
+			
+			try {
+				alert('c=' + c);
+			} catch(e) {
+				alert('c throws exception');
+			}
+			
+			function test4(){
+				var val = eval; // 相当于window.eval
+				val('var e = 3');
+			};
+			test4();
+			alert('e=' + e);
+		</script>
+			
+	</head>
+	<body>
+	</body>
+</html>
