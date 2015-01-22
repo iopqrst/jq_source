@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>globalEval</title>
+		<script src="jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function() {
+				var arr = $.map([1, 2, 3, 4], function(ele, i) {
+					if (ele > 2) {
+						return ele + 2;
+					} 
+				});
+
+				// 返回[5,6]
+				console.info(arr);
+				
+				var arr = $.map([1, 2, 3, 4], function(ele, i) {
+					if (ele > 2) {
+						return [ele + 2];
+					} 
+				});
+
+				// 返回[5,6]
+				// 这就是为什么map最终返回的是core_concat.apply([], ret)
+				console.info(arr);
+			})
+		</script>
+
+	</head>
+
+	<body>
+	</body>
+
+</html>

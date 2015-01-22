@@ -1003,6 +1003,8 @@
 
 				len = arr.length;
 				i = i ? i < 0 ? Math.max(0, len + i) : i : 0;
+				// 我觉得上面的等价于： (i? xxx:xx 只要不等于0,都是true,返回前面的值)
+				// i = i ? ((i < 0) ? Math.max(0, len + i) : i) : 0;
 
 				for (; i < len; i++) {
 					// Skip accessing in sparse arrays
@@ -1060,7 +1062,7 @@
 				ret = [],
 				i = 0,
 				length = elems.length;
-			inv = !!inv; //!!undefined ==> false
+			inv = !!inv; //!!undefined -> false, !!null -> false
 
 			// Go through the array, only saving the items
 			// that pass the validator function
@@ -1105,7 +1107,7 @@
 			}
 
 			// Flatten any nested arrays
-			// 通过concat保证返回的数组是一个“纯”数组而非符合数组
+			// 通过concat保证返回的数组是一个“纯”数组而非符合数组（08-map.html）
 			return core_concat.apply([], ret);
 		},
 
