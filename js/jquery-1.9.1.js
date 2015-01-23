@@ -122,7 +122,7 @@
 				document.removeEventListener("DOMContentLoaded", completed, false);
 				window.removeEventListener("load", completed, false);
 
-			} else {// fixed ie 
+			} else { // fixed ie 
 				document.detachEvent("onreadystatechange", completed);
 				window.detachEvent("onload", completed);
 			}
@@ -598,15 +598,15 @@
 
 		/**
 		 * 是否是数字
-		 * 
+		 *
 		 * isFinite() 函数用于检查其参数是否是无穷大。
 		 * 如果 number 是有限数字（或可转换为有限数字），那么返回 true。
 		 * 否则，如果 number 是 NaN（非数字），或者是正、负无穷大的数，则返回 false。
-		 * 
+		 *
 		 * 思考：
 		 * 1、既然isFinite 可以判断出非数字，那为什么不直接写isFinite来判断
 		 * 而是还要加上前面的？
-		 * 
+		 *
 		 * 2、可以使用typeof obj 来判断是否是数字吗？
 		 * 不能，因为typeof NaN 也会返回number
 		 */
@@ -617,7 +617,7 @@
 		},
 		/**
 		 * 判断传入值得类型
-		 * 
+		 *
 		 * typeof (new Date()) --> object
 		 * typeof [] --> object
 		 * 没法区分呀！！所以...
@@ -628,13 +628,13 @@
 			// 调用Object.prototype.toString方法，生成 "[object Xxx]"格式的字符串
 			// class2type[ "[object " + name + "]" ] = name.toLowerCase();
 			if (obj == null) { // null或undefined
-				return String(obj);  // --> "null"
+				return String(obj); // --> "null"
 			}
-			
+
 			//Object.prototype.toString.call(obj)
-//			return (typeof obj === "object" || typeof obj === "function") ?
-//				(class2type[core_toString.call(obj)] || "object") :
-//				typeof obj;
+			//			return (typeof obj === "object" || typeof obj === "function") ?
+			//				(class2type[core_toString.call(obj)] || "object") :
+			//				typeof obj;
 			return typeof obj === "object" || typeof obj === "function" ?
 				class2type[core_toString.call(obj)] || "object" :
 				typeof obj;
@@ -647,12 +647,12 @@
 		// console.info( $.isPlainObject( document ) ); // false
 		// console.info( $.isPlainObject( new Date() ) ); // false
 		// console.info( $.isPlainObject( ) ); // false
-		
+
 		/**
 		 * var o1 = new Object('aa');
 		 * $.isPlainObject(o1) --> false
 		 * console.info(o1.constructor == String) --> true
-		 * 
+		 *
 		 * 同理：
 		 * var o1 = new Object(123);
 		 * $.isPlainObject(o1) --> false
@@ -677,7 +677,7 @@
 			if (!obj || jQuery.type(obj) !== "object" || obj.nodeType || jQuery.isWindow(obj)) {
 				return false;
 			}
-			
+
 			// TODO 有点迷糊
 			try {
 				// Not own constructor property must be Object
@@ -704,13 +704,13 @@
 
 		/**
 		 * 是否为空对象
-		 * 
+		 *
 		 * isEmptyObject([])
 		 * isEmptyObject({})
 		 * function Aaa() {}
 		 * var obj = new Aaa();
-		 * isEmptyObject(obj) 
-		 * 
+		 * isEmptyObject(obj)
+		 *
 		 * 等都是空对象
 		 */
 		isEmptyObject: function(obj) {
@@ -739,7 +739,7 @@
 				keepScripts = context;
 				context = false;
 			}
-			
+
 			// 上下文其实只能是document(.createElement), 可能是当前页面的document，也可能是iframe的document
 			context = context || document;
 
@@ -898,7 +898,7 @@
 
 		/**
 		 * 遍历对象或数组
-		 * 
+		 *
 		 * @param obj
 		 * @param callback
 		 * @param args args is for internal usage only 参数仅供内部使用
@@ -954,7 +954,7 @@
 
 		// Use native String.trim function wherever possible
 		/**
-		 * 没懂什么意思？
+		 * \uFEFF\xA0 没懂什么意思？
 		 */
 		trim: core_trim && !core_trim.call("\uFEFF\xA0") ?
 			function(text) {
@@ -1154,15 +1154,27 @@
 
 		// Multifunctional method to get and set values of a collection
 		// The value/s can optionally be executed if it's a function
+		/** 
+		 * jQuery的很多方法都调用了这个方法，比如css、attr、data一类方法等等
+		 * 
+		 * @param elems 元素集合
+		 * @param fn 回调函数
+		 * @param key 设置的属性
+		 * @param value 属性值
+		 * @param chainable 是设置值还是获取值 true : 设置值， false 读取值
+		 * @param emptyGet 
+		 * @param raw 
+		 */
 		access: function(elems, fn, key, value, chainable, emptyGet, raw) {
 			var i = 0,
 				length = elems.length,
 				bulk = key == null; //当key为空时bulk为true
 
-			// Sets many values 如果key = {'height':'300', 'width':300}
+			// Sets many values 如果key = {'height':'300', 'width':300}像这种情况肯定是设置value，
+			// 而非获取，所以直接在线面将chainable直接设置为true
 			if (jQuery.type(key) === "object") {
 				chainable = true;
-				for (i in key) {
+				for (i in key) { //递归设置每个json对象的值
 					jQuery.access(elems, fn, i, key[i], true, emptyGet, raw);
 				}
 
@@ -1229,7 +1241,7 @@
 
 				// A fallback to window.onload, that will always work
 				window.addEventListener("load", completed, false);
-				
+
 				// DOMContentLoaded 和 load 同时写是为了防止浏览器缓存事件导致
 				// 事件限制性或不执行，而两个都调用了回调函数completed,在回调函数中
 				// 我们可以看到方法同时移除了两个事件，也就意味着无论哪个方法执行，都只会
@@ -1279,7 +1291,7 @@
 	// Populate the class2type map
 	/**
 	 * 将类型放入数组中
-	 * 
+	 *
 	 * [object Boolean] -> boolean
 	 * [object Number] -> number
 	 * [object String] -> string
@@ -7003,7 +7015,7 @@
 			}
 		}
 	});
-	
+
 	var iframe, getStyles, curCSS,
 		ralpha = /alpha\([^)]*\)/i,
 		ropacity = /opacity\s*=\s*([^)]*)/,

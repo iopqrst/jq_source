@@ -7,7 +7,27 @@
 		<script src="jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
 			$(function() {
-
+				
+				// part one , part two
+//				function show() {
+//					alert(this);
+//				}
+//				
+//				show();
+				
+				
+				var obj = {
+					show : function() {
+						console.info(this);
+						for(var arg in arguments) {
+							console.info(arguments[arg]);
+						}
+					}
+				};
+				
+				$.proxy(obj.show, document, 3,4)(5,6); //3/4/5/6 都是参数信息
+				$.proxy(obj,'show')();
+				
 			});
 		</script>
 
