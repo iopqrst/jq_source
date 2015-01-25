@@ -1156,22 +1156,23 @@
 		// The value/s can optionally be executed if it's a function
 		/** 
 		 * jQuery的很多方法都调用了这个方法，比如css、attr、data一类方法等等
-		 * 
+		 *
 		 * @param elems 元素集合
 		 * @param fn 回调函数
 		 * @param key 设置的属性
 		 * @param value 属性值
-		 * @param chainable 是设置值还是获取值 true : 设置值， false 读取值
-		 * @param emptyGet 
-		 * @param raw 
+		 * @param chainable 是设置值还是 获取值   ,true : 设置值， false 读取值
+		 * @param emptyGet
+		 * @param raw
 		 */
 		access: function(elems, fn, key, value, chainable, emptyGet, raw) {
+			debugger;
 			var i = 0,
 				length = elems.length,
 				bulk = key == null; //当key为空时bulk为true
 
 			// Sets many values 如果key = {'height':'300', 'width':300}像这种情况肯定是设置value，
-			// 而非获取，所以直接在线面将chainable直接设置为true
+			// 非获取，所以直接在下面将chainable直接设置为true 是这样的吗，从变量的命名及用法不像？
 			if (jQuery.type(key) === "object") {
 				chainable = true;
 				for (i in key) { //递归设置每个json对象的值
@@ -1320,6 +1321,7 @@
 			return true;
 		}
 
+		// arguments 参数信息就是一个类素组， 如果参数为空的话，(length - 1) 为-1 就不是类数组了  
 		return type === "array" || type !== "function" &&
 			(length === 0 ||
 				typeof length === "number" && length > 0 && (length - 1) in obj);
@@ -1327,14 +1329,20 @@
 
 	// All jQuery objects should point back to these
 	rootjQuery = jQuery(document);
+
 	// String to Object options format cache
+	// 存放格式如下(key： value): "once memory" : {"once":true, "memory":true}
 	var optionsCache = {};
 
 	// Convert String-formatted options into Object-formatted ones and store in cache
 	function createOptions(options) {
 		var object = optionsCache[options] = {};
+
+		// var a = "once memory unique".match(/\S+/g);
+		// ["once", "memory", "unique"] 
+
 		jQuery.each(options.match(core_rnotwhite) || [], function(_, flag) {
-			object[flag] = true;
+			object[flag] = true; // flag 元素， _ 索引
 		});
 		return object;
 	}
@@ -1362,12 +1370,12 @@
 	 *
 	 */
 	jQuery.Callbacks = function(options) {
-
 		// Convert options from String-formatted to Object-formatted if needed
 		// (we check in cache first)
+		// options 可能是单个也可能是多个，所以现从缓存中获取，因为缓存中存放了经过处理的值
 		options = typeof options === "string" ?
 			(optionsCache[options] || createOptions(options)) :
-			jQuery.extend({}, options);
+			jQuery.extend({}, options); // 如果没值保证程序能够正常进行
 
 		var // Flag to know if list is currently firing
 			firing,
@@ -1384,9 +1392,11 @@
 			// Actual callback list
 			list = [],
 			// Stack of fire calls for repeatable lists
-			stack = !options.once && [],
+			stack = !options.once && [], //-> once -> true : stack = false; once != true : statck = []
 			// Fire callbacks
 			fire = function(data) {
+				// memory == true -> memory = data;
+				// memory == undefined -> memory = undefined
 				memory = options.memory && data;
 				fired = true;
 				firingIndex = firingStart || 0;
@@ -1394,6 +1404,7 @@
 				firingLength = list.length;
 				firing = true;
 				for (; list && firingIndex < firingLength; firingIndex++) {
+					// 如果设置stopOnFalse 并且函数返回false,则跳出循环，不在向下执行，同时设置memory
 					if (list[firingIndex].apply(data[0], data[1]) === false && options.stopOnFalse) {
 						memory = false; // To prevent further calls using add
 						break;
@@ -1416,25 +1427,28 @@
 			self = {
 				// Add a callback or a collection of callbacks to the list
 				add: function() {
-					if (list) {
+					if (list) { // if([]) --> true
 						// First, we save the current length
-						var start = list.length;
+						var start = list.length; //list 如果已有元素，再次基础上添加
 						(function add(args) {
 							jQuery.each(args, function(_, arg) {
 								var type = jQuery.type(arg);
 								if (type === "function") {
+									// 1、unique为true时， self 没有添加过该函数
+									// 2、unique 为false 添加该函数
 									if (!options.unique || !self.has(arg)) {
 										list.push(arg);
 									}
+									// 使用数组格式添加函数,[aaa,bbb]
 								} else if (arg && arg.length && type !== "string") {
-									// Inspect recursively
+									// Inspect recursively 递归调用add
 									add(arg);
 								}
 							});
 						})(arguments);
 						// Do we need to add the callbacks to the
 						// current firing batch?
-						if (firing) {
+						if (firing) { //第一次进来firing 为undefined
 							firingLength = list.length;
 							// With memory, if we're not firing then
 							// we should call right away
@@ -1453,7 +1467,7 @@
 							while ((index = jQuery.inArray(arg, list, index)) > -1) {
 								list.splice(index, 1);
 								// Handle firing indexes
-								if (firing) {
+								if (firing) {//11-Callbacks2.html
 									if (index <= firingLength) {
 										firingLength--;
 									}
@@ -1477,6 +1491,7 @@
 					return this;
 				},
 				// Have the list do nothing anymore
+				// 禁止后续所有操作 ： 参见 11-Callback3.html
 				disable: function() {
 					list = stack = memory = undefined;
 					return this;
@@ -1486,8 +1501,8 @@
 					return !list;
 				},
 				// Lock the list in its current state
-				lock: function() {
-					stack = undefined;
+				lock: function() { // 参见 11-Callback3.html
+					stack = undefined; // 锁住后续的fire(因为把stack清空了，导致不在执行后续fire操作？）
 					if (!memory) {
 						self.disable();
 					}
@@ -1500,9 +1515,10 @@
 				// Call all callbacks with the given context and arguments
 				fireWith: function(context, args) {
 					args = args || [];
+					// args.slice ? args.slice() : args 判断一下args是否是数组，是数组将数组放入参数中，否则放单个的参数
 					args = [context, args.slice ? args.slice() : args];
 					if (list && (!fired || stack)) {
-						if (firing) {
+						if (firing) { //如果程序正在firing中，再次调用fire时将函数放到堆中,参见11-Callbacks2.html
 							stack.push(args);
 						} else {
 							fire(args);
@@ -5936,6 +5952,7 @@
 
 
 	})(window);
+
 	var runtil = /Until$/,
 		rparentsprev = /^(?:parents|prev(?:Until|All))/,
 		isSimple = /^.[^:#\[\.,]*$/,

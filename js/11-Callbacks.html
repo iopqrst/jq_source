@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>callbacks</title>
+		<script src="jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			/**
+			 * 自执行函数，递归调用自己
+			 * @param {Object} type
+			 */
+			 //			(function add(type) {
+			 //				console.info('------进入递归调用')
+			 //				add(1);
+			 //			})(1);
+
+			/**
+			 * 2、callback 第一个demo
+			 */
+
+			function aaa() {
+				alert('aaa');
+			}
+
+			function bbb() {
+				alert('bbb');
+			}
+
+			var cb = $.Callbacks(undefined);
+			cb.add(aaa);
+			cb.add(bbb);
+
+			cb.fire();
+
+
+			/**
+			 * 第三个实例
+			 */
+			 //			var cb = $.Callbacks();
+			 //			function ccc() {
+			 //				alert('ccc');
+			 //			}
+			 //			
+			 //			cb.add(ccc);
+			 //
+			 //			(function() {
+			 //
+			 //				function ddd() {
+			 //					alert('ddd');
+			 //				}
+			 //				cb.add(ddd);
+			 //			})();
+
+			 // 如果想在外部，按照先调用ccc 后 调用ddd 的顺序是无法完成的
+			 // 这里如果使用callbacks就可以实现
+			 //			cb.fire();
+
+			/**
+			 * 第四个 callbacks 是可以传入参数的
+			 */
+			 //			function eee() {
+			 //				alert('eee');
+			 //			}
+			 //			
+			 //			function fff() {
+			 //				alert('fff');
+			 //			}
+			 //			
+			 //			// 理论上调用几次fire, list中函数就会执行几次，但是如果options设置为once,
+			 //			// 不管调动多少次，都只会执行一次
+			 //			var cb = $.Callbacks("once");
+			 //			
+			 //			cb.add(eee);
+			 //			cb.add(fff);
+			 //			
+			 //			cb.fire();
+			 //			
+			 //			cb.fire();
+
+			/**
+			 * memory
+			 */
+			 //			function ggg() {
+			 //				alert('ggg');
+			 //			}
+			 //			
+			 //			function hhh() {
+			 //				alert('hhh');
+			 //			}
+			 //			
+			 //			// 不加memory，hhh方法将不会调用
+			 //			var cb = $.Callbacks("memory");
+			 //			
+			 //			cb.add(ggg);
+			 //			
+			 //			cb.fire();
+			 //			
+			 //			cb.add(hhh);
+
+			/**
+			 * unique
+			 */
+			 //			function lll() {
+			 //				alert('lll');
+			 //			}
+			 //			
+			 //			// 不加该参数，会调用两次lll,加上后执行一次
+			 //			var cb = $.Callbacks("unique");
+			 //			cb.add(lll);
+			 //			cb.add(lll);
+			 //			
+			 //			cb.fire();
+
+			/**
+			 * once , memory, unique 可以组合使用
+			 */
+			 //			function jjj() {
+			 //				alert('jjj');
+			 //			}
+			 //			
+			 //			function kkk() {
+			 //				alert('kkk');
+			 //			}
+			 //			
+			 //			var cb = $.Callbacks("once memory");
+			 //			
+			 //			cb.add(jjj);
+			 //			cb.fire();
+			 //			
+			 //			cb.add(kkk);
+			 //			
+			 //			cb.fire();
+
+			/**
+			 * stopOnFalse
+			 */
+			 //			function ooo() {
+			 //				alert('ooo');
+			 //				return false;
+			 //			}
+			 //
+			 //			function ppp() {
+			 //				alert('ppp');				
+			 //			}
+			 //			
+			 //			// 不加stopOnFalse时，两个函数都会正常执行，当加上该参数是，函数将停止与return false处
+			 //			var cb = $.Callbacks("stopOnFalse");
+			 //			cb.add(ooo, ppp);
+			 //			
+			 //			cb.fire();
+			 //			
+
+			/**
+			 * 传递参数方式
+			 */
+			 //			function www(name) {
+			 //				alert('www : ' + name);
+			 //			}
+			 //
+			 //			function qqq(name) {
+			 //				alert('qqq : ' + name);
+			 //			}
+			 //
+			 //			var cb = $.Callbacks();
+			 //			cb.add(www, qqq);
+			 //			
+			 //			cb.fire('monkey');
+			/**
+			 * 其他用法
+			 */
+			 //			function mmm() {
+			 //				alert('mmm');
+			 //			}
+			 //
+			 //			function nnn() {
+			 //				alert('nnn');
+			 //			}
+			 //
+			 //			function xxx() {
+			 //				alert('xxx');
+			 //			}
+			 //
+			 //			function yyy() {
+			 //				alert('yyy');
+			 //			}
+			 //
+			 //			var cb = $.Callbacks();
+			 //			cb.add(mmm, nnn); //作为参数，传入
+			 //			cb.add([xxx, yyy]) //数组的方式传入
+			 //
+			 //			 cb.fire();
+		</script>
+
+	</head>
+
+	<body>
+	</body>
+
+</html>
