@@ -1539,6 +1539,7 @@
 
 		return self;
 	};
+
 	jQuery.extend({
 
 		Deferred: function(func) {
@@ -1680,6 +1681,7 @@
 			return deferred.promise();
 		}
 	});
+
 	jQuery.support = (function() {
 
 		var support, all, a,

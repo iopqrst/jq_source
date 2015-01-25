@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>callbacks3</title>
+		<script src="jquery-1.9.1.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			$(function(){
+				
+				var cb = $.Callbacks('memory');
+				function aaa() {
+					alert('aaa');
+				}
+				function bbb() {
+					alert('bbb');
+				}
+				
+				cb.add(aaa);
+				cb.fire();
+				cb.fire();
+				
+				$("input").on('click', function(){
+					
+					cb.add(bbb);	
+					
+				});
+			});
+		</script>
+
+	</head>
+
+	<body>
+		<input type="button" value="click" />
+	</body>
+
+</html>
