@@ -1540,8 +1540,13 @@
 		return self;
 	};
 
+	/**
+	 * 延迟对象，视频第34-37课左右
+	 * 
+	 * http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html
+	 */
 	jQuery.extend({
-
+		
 		Deferred: function(func) {
 			var tuples = [
 					// action, add listener, listener list, final state
@@ -1555,6 +1560,7 @@
 						return state;
 					},
 					always: function() {
+						// 无论执行成功还是失败，都执行相同的操作...
 						deferred.done(arguments).fail(arguments);
 						return this;
 					},
