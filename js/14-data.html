@@ -8,9 +8,8 @@
 		<script type="text/javascript">
 			$(function(){
 				
-				for(var attr in $.support) {
-					document.write(attr + ' = ' + $.support[attr] + '<br/>');
-				}
+				$("#mydata").data("name","tomcat");
+				console.info('test');
 				
 			});
 		</script>
@@ -18,7 +17,7 @@
 	</head>
 
 	<body>
-
+		<div id="mydata"></div>
 	</body>
 
 </html>

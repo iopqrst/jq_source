@@ -1166,7 +1166,6 @@
 		 * @param raw
 		 */
 		access: function(elems, fn, key, value, chainable, emptyGet, raw) {
-			debugger;
 			var i = 0,
 				length = elems.length,
 				bulk = key == null; //当key为空时bulk为true
@@ -1467,7 +1466,7 @@
 							while ((index = jQuery.inArray(arg, list, index)) > -1) {
 								list.splice(index, 1);
 								// Handle firing indexes
-								if (firing) {//11-Callbacks2.html
+								if (firing) { //11-Callbacks2.html
 									if (index <= firingLength) {
 										firingLength--;
 									}
@@ -1542,11 +1541,11 @@
 
 	/**
 	 * 延迟对象，视频第34-37课左右
-	 * 
+	 *
 	 * http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html
 	 */
 	jQuery.extend({
-		
+
 		Deferred: function(func) {
 			var tuples = [
 					// action, add listener, listener list, final state
@@ -2158,8 +2157,16 @@
 		},
 
 		// A method for determining if a DOM node can handle the data expando
+		/**
+		 * 元素element	1
+		 * 属性attr	2
+		 * 文本text	3
+		 * 注释comments	8
+		 * 文档document	9
+		 * @param {Object} elem
+		 */
 		acceptData: function(elem) {
-			// Do not set data on non-element because it will not be cleared (#8335).
+			// Do not set data on non-element(非元素) because it will not be cleared (#8335).
 			if (elem.nodeType && elem.nodeType !== 1 && elem.nodeType !== 9) {
 				return false;
 			}
