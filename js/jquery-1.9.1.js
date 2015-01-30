@@ -1937,6 +1937,7 @@
 		rmultiDash = /([A-Z])/g;
 
 	function internalData(elem, name, data, pvt /* Internal Use Only */ ) {
+		debugger;
 		if (!jQuery.acceptData(elem)) {
 			return;
 		}
@@ -1955,6 +1956,8 @@
 
 			// Only defining an ID for JS objects if its cache already exists allows
 			// the code to shortcut on the same path as a DOM node with no cache
+			
+			// id = isNode ? elem[internalKey] : (elem[internalKey] && internalKey);
 			id = isNode ? elem[internalKey] : elem[internalKey] && internalKey;
 
 		// Avoid doing any more work than we need to when trying to get data on an
@@ -2031,6 +2034,7 @@
 	}
 
 	function internalRemoveData(elem, name, pvt) {
+		debugger;
 		if (!jQuery.acceptData(elem)) {
 			return;
 		}
@@ -2158,6 +2162,8 @@
 
 		// A method for determining if a DOM node can handle the data expando
 		/**
+		 * 判断元素节点是否可以使用data存储数据
+		 * 
 		 * 元素element	1
 		 * 属性attr	2
 		 * 文本text	3
@@ -2171,10 +2177,15 @@
 				return false;
 			}
 
+			//
 			var noData = elem.nodeName && jQuery.noData[elem.nodeName.toLowerCase()];
 
 			// nodes accept data unless otherwise specified; rejection can be conditional
-			return !noData || noData !== true && elem.getAttribute("classid") === noData;
+			console.info('noData = ' + noData);
+			var a = !noData || noData !== true && elem.getAttribute("classid") === noData;
+			console.info('result = ' + a);
+			return a;
+
 		}
 	});
 
@@ -2282,6 +2293,7 @@
 
 		return true;
 	}
+	
 	jQuery.extend({
 		queue: function(elem, type, data) {
 			var queue;
