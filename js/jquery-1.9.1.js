@@ -1937,7 +1937,6 @@
 		rmultiDash = /([A-Z])/g;
 
 	function internalData(elem, name, data, pvt /* Internal Use Only */ ) {
-		debugger;
 		if (!jQuery.acceptData(elem)) {
 			return;
 		}
@@ -2029,12 +2028,12 @@
 		} else {
 			ret = thisCache;
 		}
-
+		console.info('ret = ' +　ret);
+		console.info(jQuery.cache);
 		return ret;
 	}
 
 	function internalRemoveData(elem, name, pvt) {
-		debugger;
 		if (!jQuery.acceptData(elem)) {
 			return;
 		}
@@ -2181,9 +2180,9 @@
 			var noData = elem.nodeName && jQuery.noData[elem.nodeName.toLowerCase()];
 
 			// nodes accept data unless otherwise specified; rejection can be conditional
-			console.info('noData = ' + noData);
+			//console.info('noData = ' + noData);
 			var a = !noData || noData !== true && elem.getAttribute("classid") === noData;
-			console.info('result = ' + a);
+			//console.info('result = ' + a);
 			return a;
 
 		}
