@@ -2028,8 +2028,8 @@
 		} else {
 			ret = thisCache;
 		}
-		console.info('ret = ' +　ret);
-		console.info(jQuery.cache);
+		//console.info('ret = ' +　ret);
+		//console.info(jQuery.cache);
 		return ret;
 	}
 
@@ -2438,8 +2438,9 @@
 			}
 			resolve();
 			return defer.promise(obj);
-		}
+		}  
 	});
+	
 	var nodeHook, boolHook,
 		rclass = /[\t\r\n]/g,
 		rreturn = /\r/g,
@@ -2520,7 +2521,12 @@
 				i = 0,
 				len = this.length,
 				proceed = arguments.length === 0 || typeof value === "string" && value;
-
+				// console.info(1 || 0 && 2); --> 1 也就是说先执行了后面的 （&& 优先级比||高）
+				// console.info(1 && 2 && 3); --> 3
+				// console.info(3 && 2 && 1); --> 1
+				// console.info(0 || 1 || 2); --1
+				// console.info(0 && 1 || 2); --> -2
+				// console.info(0 && 1 || 2); --> 2
 			if (jQuery.isFunction(value)) {
 				return this.each(function(j) {
 					jQuery(this).removeClass(value.call(this, j, this.className));
