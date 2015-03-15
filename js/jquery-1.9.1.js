@@ -2294,6 +2294,7 @@
 	}
 	
 	jQuery.extend({
+		// 如果没有data参数相当于直接返回该元素上的某种type的队列
 		queue: function(elem, type, data) {
 			var queue;
 
@@ -2303,9 +2304,18 @@
 
 				// Speed up dequeue by getting out quickly if this is just a lookup
 				if (data) {
+					
+					// console.info('data----' + data);
+					// console.info('只有一个元素：' + jQuery.makeArray(data));
+					
+					// 如果该 type 的 queue 没有存值则保存到 queue 上, 因为之前就是空的，而jQuery.makeArray
+					// 也会将 data 直接转化为数组（是不是数组其实对结果没有影响）
+					// 如果为 type 的 queue 不为空但是 data 是一个数组则 “删除”之前 的数据，新建 一个只有
+					// data 数据的 queue
 					if (!queue || jQuery.isArray(data)) {
 						queue = jQuery._data(elem, type, jQuery.makeArray(data));
 					} else {
+						// 如果之前已经保存了该类型的队列，直接将data push 到队列中
 						queue.push(data);
 					}
 				}
@@ -2438,7 +2448,7 @@
 			}
 			resolve();
 			return defer.promise(obj);
-		}  
+		}
 	});
 	
 	var nodeHook, boolHook,

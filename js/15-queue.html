@@ -16,17 +16,48 @@
 					alert('bbb');
 				}
 				
-				$.queue(document, 'q', aaa);
-				$.queue(document, 'q', bbb);
+//				$.queue(document, 'q', aaa);
+//				$.queue(document, 'q', bbb);
+//				
+//				$.queue(document, 'q2', [aaa, bbb]);
+//				
+//				console.log('-----' + $.queue(document, 'q2'));
+//				console.log('-----' + $.queue(document, 'q2'));
+//				
+//				
+//				$.dequeue(document, 'q');
+//				$.dequeue(document, 'q');
+
+
+
+
+				/**
+				 * 如果data是一个数组，则会将之前该 type 的队列清空重新存放
+				 * 
+				 * if (!queue || jQuery.isArray(data)) {
+				 *		queue = jQuery._data(elem, type, jQuery.makeArray(data));
+				 *	}
+				 * 正式上述话的表达
+				 */
+//				$.queue(document, 'q', aaa);
+//				$.queue(document, 'q', bbb);
+//				function ccc() {
+//					alert('ccc');
+//				}
+//				
+//				function ddd() {
+//					alert('ddd');
+//				}
+//				
+//				
+//				$.queue(document, 'q', [ccc, ddd]);
+//				
 				
-				$.queue(document, 'q2', [aaa, bbb]);
+//				console.log('-----' + $.queue(document, 'q'));
 				
-				console.log('-----' + $.queue(document, 'q2'));
-				console.log('-----' + $.queue(document, 'q2'));
+				$.queue(document, 'q3', aaa);
 				
-				
-				$.dequeue(document, 'q');
-				$.dequeue(document, 'q');
+				//console.log('-----' + $.queue(document, 'q3'));
 			});
 		</script>
 
