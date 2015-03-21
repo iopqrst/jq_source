@@ -29,8 +29,8 @@ define([
 	"./dimensions",
 	"./deprecated",
 	"./exports/amd"
-], function( jQuery ) {
+], function(jQuery) {
 
-return (window.jQuery = window.$ = jQuery);
+	return (window.jQuery = window.$ = jQuery);
 
 });
